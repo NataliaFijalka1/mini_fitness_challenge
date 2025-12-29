@@ -10,9 +10,13 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mini Fitness App',
+      title: 'Mini Fitness Challenge',
       theme: ThemeData(
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 80, 135, 164)),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+        ),
       ),
       initialRoute: StartScreen.routeName, // erst StartScreen als Startbildschirm
       routes: {

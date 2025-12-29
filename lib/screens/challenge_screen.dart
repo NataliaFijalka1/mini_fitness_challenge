@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/challenge.dart';
-import '../sevices/challenge_generator.dart';
+import '../services/challenge_generator.dart';
 import 'result_screen.dart';
 import 'dart:async';
 
@@ -12,9 +12,6 @@ class ChallengeScreen extends StatefulWidget {
 @override
   State<ChallengeScreen> createState() => _ChallengeScreenState();
 }
-
-
-
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
   final _generator = ChallengeGenerator();
@@ -46,8 +43,6 @@ void dispose() {
   }
 
 
-
-
   int get _currentValue => _challenge.kind == ChallengeKind.reps ? _repsDone : _secondsPassed;
 
   double get _progress => (_currentValue / _challenge.target).clamp(0,1);
@@ -68,14 +63,12 @@ return rawScore < 0 ? 0 : rawScore;
 
   }
 
-
-
 void _start() {
   setState(() => _running = true);
 
 
   if (_challenge.kind == ChallengeKind.timer) {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer ??= Timer.periodic(const Duration(seconds: 1), (timer) {
      if (!_running) return;
 
       setState(() =>
@@ -117,15 +110,37 @@ void _addRep() {
     setState(() =>
       _running = false);
 
+      final score = _calculateScore();
+
       Navigator.pushReplacementNamed(
         context, 
         ResultScreen.routeName,
         arguments: ResultArgs(
           challenge: _challenge,
-          score: _calculateScore(),
+          score: score,
         ),
       );
     }
+
+    void _finishEarly() {
+  _timer?.cancel();
+  _timer = null;
+  setState(() => _running = false);
+
+  final ratio = (_currentValue / _challenge.target).clamp(0.0, 1.0);
+  final baseScore = _calculateScore();
+  final finalScore = (baseScore * ratio).round();
+
+  Navigator.pushReplacementNamed(
+    context,
+    ResultScreen.routeName,
+    arguments: ResultArgs(
+      challenge: _challenge,
+      score: finalScore,
+    ),
+  );
+}
+
 
     void _newChallenge() {
       _timer?.cancel();
@@ -144,7 +159,7 @@ void _addRep() {
   Widget build(BuildContext context) {
       final current = _currentValue;
 
-    return Scaffold (appBar: AppBar(title: const Text ('Challange')),
+    return Scaffold (appBar: AppBar(title: const Text ('Challenge')),
     body: Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -211,6 +226,15 @@ void _addRep() {
             ),
           ],
         ),
+
+      const SizedBox(height: 8),
+      OutlinedButton.icon(
+          onPressed: _currentValue > 0 ? _finishEarly : null,
+          icon: const Icon(Icons.flag_outlined),
+          label: const Text('Vorzeitig beenden'),
+        ),
+      const SizedBox(height: 8),
+
         Row(
      children: [
         Expanded(
@@ -221,7 +245,7 @@ void _addRep() {
           ),
         ),
 
-        const SizedBox(height: 8),
+        const SizedBox(width: 8),
         Expanded(
           child: TextButton(
             onPressed: _abbort,
@@ -230,10 +254,6 @@ void _addRep() {
         ),
      ],
     ),
-
-        
-
-
 
 
         ],
