@@ -241,7 +241,7 @@ void _addRep() {
           child: OutlinedButton.icon(
             onPressed: _newChallenge,
           icon: const Icon(Icons.shuffle),
-            label: const Text('Neue Challenge generieren'),
+            label: const Text('Neue Challenge'),
           ),
         ),
 

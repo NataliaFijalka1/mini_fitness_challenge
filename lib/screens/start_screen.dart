@@ -39,15 +39,25 @@ class _StartScreenState extends State<StartScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/logo.png', 
+                    width: 120, height: 120),
+                    const SizedBox(width: 12),
+                    Expanded(child: 
              Text(
               'Willkommen zur Mini Fitness Challenge!',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),
+                    ),
+                  ],
+                ),
             const SizedBox(height: 8),
             Text(
-              'Wähle den Schwierigkeitsgrad und starte die Herausforderung mit einer zufälligen Challenge.\n '
+              'Wähle den Schwierigkeitsgrad und starte die Herausforderung mit einer zufälligen Challenge.\n'
               'Priorität liegt auf Spaß und Bewegung! Danach gibt es Punkte & Ranglistenplatzierungen für die Session.\n'
               'Viel Erfolg!',
               style: Theme.of(context).textTheme.bodyMedium,
