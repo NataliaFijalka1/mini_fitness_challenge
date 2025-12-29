@@ -3,6 +3,9 @@ import '../models/challenge.dart';
 import 'ranking_screen.dart';
 import 'start_screen.dart';
 import 'challenge_screen.dart';
+import 'package:provider/provider.dart';
+import '../state/session_results_store.dart';
+import '/models/session_result.dart';
 
 class ResultArgs {
   final Challenge challenge;
@@ -48,18 +51,17 @@ void _openRanking(ResultArgs args) {
     }
 
     setState(() => _errorText = null);
-      
-    //ersetzte folgendes dann später
-    Navigator.pushNamed(
-      context,
-      RankingScreen.routeName,
-      arguments: RankingArgs(
-        name: name,
-        score: args.score,
-        challengeTitle: args.challenge.title,
-        difficulty: args.challenge.difficulty,
-      ),
+
+     final result = SessionResult(
+      name: name,
+      score: args.score,
+      challengeTitle: args.challenge.title,
+      difficulty: args.challenge.difficulty,
     );
+
+    context.read<SessionResultsStore>().addResult(result);
+    Navigator.pushReplacementNamed(context, RankingScreen.routeName);
+   
     
   }
 
