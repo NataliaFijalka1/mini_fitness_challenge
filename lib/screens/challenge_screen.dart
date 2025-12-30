@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_fitness_challenge/screens/start_screen.dart';
 import '../models/challenge.dart';
 import '../services/challenge_generator.dart';
 import 'result_screen.dart';
@@ -91,7 +92,12 @@ void _pause() {
 void _abbort() {
     _timer?.cancel();
     _timer = null;
-    Navigator.pop(context);
+
+    Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  StartScreen.routeName,
+                  (route) => false,);
+  
   }
 
 void _addRep() {
@@ -247,9 +253,10 @@ void _addRep() {
 
         const SizedBox(width: 8),
         Expanded(
-          child: TextButton(
+          child: OutlinedButton.icon(
             onPressed: _abbort,
-            child: const Text('Abbrechen'),
+            icon: const Icon(Icons.cancel_outlined),
+            label: const Text('Abbrechen'),
           ),
         ),
      ],

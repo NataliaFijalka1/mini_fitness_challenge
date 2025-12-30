@@ -21,7 +21,7 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mini Fitness Challange'),
+        title: const Text('Mini Fitness Challenge'),
       ),
       body: SafeArea(
         child:  Padding(
@@ -89,8 +89,7 @@ class _StartScreenState extends State<StartScreen> {
             Text(
               'Schwierigkeitsgrad:',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                           ),
+                fontWeight: FontWeight.w600,),
             ),
 
             const SizedBox(height: 12),

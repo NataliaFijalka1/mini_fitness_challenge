@@ -1,5 +1,3 @@
-//das für die Schwierigkeitsgrad-Auswahl verwendete Widget
-
 import 'package:flutter/material.dart';
 
 class DifficultyChip extends StatelessWidget {

@@ -2,9 +2,9 @@ enum Difficulty { easy, medium, hard }
 enum ChallengeKind { reps, timer }
 
 class Challenge {
-  final String title;        // z.B. "Kniebeugen"
+  final String title;        
   final ChallengeKind kind;  // reps oder timer
-  final int target;          // Wiederholungen oder Sekunden
+  final int target;          
   final Difficulty difficulty;
 
   const Challenge({
@@ -17,7 +17,7 @@ class Challenge {
 
 extension DifficultyX on Difficulty {
   String get label => switch (this) {
-        Difficulty.easy => "Leicht", // geändert, so ist übersichtilicher 
+        Difficulty.easy => "Leicht", 
         Difficulty.medium => "Mittel",
         Difficulty.hard => "Schwer",
       };

@@ -1,7 +1,7 @@
 import 'dart:math';
 import '../models/challenge.dart';
 
-// Generiert zufällige Challenges passend zur Difficulty.
+
 class ChallengeGenerator {
   final Random _rnd = Random();
 

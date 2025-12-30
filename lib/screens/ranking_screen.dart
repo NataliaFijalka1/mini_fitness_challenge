@@ -5,20 +5,6 @@ import 'package:mini_fitness_challenge/state/session_results_store.dart';
 import 'package:provider/provider.dart';
 import 'start_screen.dart';
 
-class RankingArgs {
-  final String name;
-  final int score;
-  final String challengeTitle;
-  final Difficulty difficulty;
-
-  const RankingArgs({
-    required this.name,
-    required this.score,
-    required this.challengeTitle,
-    required this.difficulty,
-  
-  });
-}
 
 class RankingScreen extends StatelessWidget {
   static const routeName = '/ranking';
@@ -105,7 +91,7 @@ final results = store.sortedResults;
                       );
                     },
                     icon: const Icon(Icons.replay),
-                    label: const Text('Replay (Top Ergebnis Schwierigkeit)'),
+                    label: const Text('Replay Bestleistungsschwierigkeitsgrad'),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -117,7 +103,7 @@ final results = store.sortedResults;
                       (route) => false,
                     );
                   },
-                  child: const Text('Start'),
+                  child: const Text('Startbildschirm'),
                   ),
 
                 ),

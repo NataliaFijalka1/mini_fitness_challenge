@@ -36,9 +36,24 @@ class _ResultScreenState extends State<ResultScreen> {
     super.dispose();
   }
 
-String _feedbackText(int score) {
-  if (score >= 80) return "Sehr gut!";
-  if (score >= 40) return "Gut!";
+
+int _maxScoreFor(Challenge c) {
+  final base = c.kind == ChallengeKind.reps ? c.target : (c.target / 2).round();
+  return base * c.difficulty.multiplier;
+}
+int _scorePercent(ResultArgs args) {
+  final maxScore = _maxScoreFor(args.challenge);
+  if (maxScore <= 0) return 0;
+  final double ratio =
+    (args.score.toDouble() / maxScore).clamp(0.0, 1.0).toDouble();
+  
+  return (ratio * 100).round();
+}
+
+String _feedbackTextPercent(ResultArgs args) {
+  final percent = _scorePercent(args);
+  if (percent >= 80) return "Sehr gut!";
+  if (percent >= 40) return "Gut!";
   return "Ausbaufähig!";
 }
 
@@ -78,7 +93,7 @@ void _openRanking(ResultArgs args) {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              _feedbackText(args.score),
+              _feedbackTextPercent(args),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 12),
@@ -127,8 +142,6 @@ void _openRanking(ResultArgs args) {
             label: const Text('Nochmalige Challenge mit gleicher Schwierigkeit'),
             ),
             const SizedBox(height: 8),
-            
-  
     
             TextButton(
               onPressed: () {
